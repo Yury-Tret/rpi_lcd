@@ -1,2 +1,2 @@
 bin_PROGRAMS = rpi_lcd
-rpi_lcd_SOURCES = main.c rpi.c
+rpi_lcd_SOURCES = main.c rpi.c lcd.c
