@@ -30,6 +30,6 @@ struct bcm2835_peripheral {
 extern struct bcm2835_peripheral gpio;
 int map_peripheral(struct bcm2835_peripheral *);
 void unmap_peripheral(struct bcm2835_peripheral *);
-void enable_gpio_pins(unsigned int[]);
+void enable_gpio_pins(unsigned int *, unsigned int);
 
 #endif

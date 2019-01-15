@@ -33,9 +33,8 @@ void unmap_peripheral(struct bcm2835_peripheral *p)
 	close(p->mem_fd);
 }
 
-void enable_gpio_pins(unsigned int pins[])
+void enable_gpio_pins(unsigned int *pins, unsigned int length)
 {
-	int length = sizeof(pins)/sizeof(int);
 	for (int i=0; i<length; i++)
 	{
 		INP_GPIO(pins[i]);

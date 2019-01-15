@@ -1,67 +1,57 @@
 #include "lcd.h"
 
-/*
-void lcd_init();
-void lcd_clear_display();
-void lcd_set_cursor();
-void lcd_send_command();
-void lcd_send_data();
-*/
-
 void lcd_init()
 {
-	lcd_set_4bit_mode();
-	lcd_clear_display();
-	//lcd_set_cursor(0, 0);
-}
+	lcd_send_command(ZERO_ALL_PINS);
+	usleep(5000);
 
-void lcd_set_4bit_mode()
-{
-	lcd_send_command(SET_4BIT_MODE);
-}
+	lcd_send_command((SET_4BIT_MODE >> 4));
+	usleep(5000);
 
-void lcd_clear_display()
-{
+	lcd_send_command(SET_4BIT_MODE|LINE_NUMBER_2|FONT_SIZE);
+	usleep(5000);
+
+	lcd_send_command(DISPLAY_ON|CURSOR_ON|CURSOR_BLINK_ON);
+	usleep(5000);
+
 	lcd_send_command(CLEAR_DISPLAY);
+	usleep(5000);
+
+	lcd_send_command(INCREMENT_CURSOR);
+	usleep(5000);
 }
 
-void lcd_set_cursor(unsigned int row, unsigned int position)
+void lcd_toggle_e_pin()
 {
-
+	SET_REGISTER(EN, 1);
+	usleep(2);
+	SET_REGISTER(EN, 0);
 }
 
 void lcd_send_command(char command)
 {
-	//set rs bit to 0
-	SET_REGISTER(RS, 0);
-	sleep(1);
-	//send data twice because 4 bits mode
-	DATA((command & 0xF0) >> 4);	//upper nibble
-	sleep(1);
-	DATA(command & 0x0F);			//lower nibble
-	sleep(1);
-	//set enable pin to 1 to secure data
-	SET_REGISTER(EN, 1);
-	usleep(1000*50);
-	sleep(1);
-	SET_REGISTER(EN, 0);
-	sleep(1);
+	SET_REGISTER(RS, 0);								//set rs bit to 0
+	SET_REGISTER(EN, 0);								//set en bit to 0
+
+	//send 2 peaces of command because 4 bits mode
+	DATA((command & 0xF0) >> 4);						//send upper nibble
+	lcd_toggle_e_pin();									//allow lcd to grad data
+	usleep(1);
+	DATA(command & 0x0F);								//send lower nibble
+	lcd_toggle_e_pin();									//allow lcd to grad data
+	usleep(100);
 }
 
 void lcd_send_data(char data)
 {
-	//set rs bit to 0
-	SET_REGISTER(RS, 1);
-	sleep(1);
-	//send data twice because 4 bits mode
-	DATA((data & 0xF0) >> 4);	//upper nibble
-	sleep(1);
-	DATA(data & 0x0F);			//lower nibble
-	sleep(1);
-	//set enable pin to 1 to secure data
-	SET_REGISTER(EN, 1);
-	usleep(1000*50);
-	sleep(1);
-	SET_REGISTER(EN, 0);
-	sleep(1);
+	SET_REGISTER(RS, 1);								//set rs bit to 0
+	SET_REGISTER(EN, 0);								//set en bit to 0
+
+	//send 2 peaces of data because 4 bits mode
+	DATA((data & 0xF0) >> 4);							//send upper nibble
+	lcd_toggle_e_pin();									//allow lcd to grad data
+	usleep(1);
+	DATA(data & 0x0F);									//send lower nibble
+	lcd_toggle_e_pin();									//allow lcd to grad data
+	usleep(100);
 }

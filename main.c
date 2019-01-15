@@ -9,23 +9,28 @@ int main(int argc, char **argv)
 		printf("Failed to map the physical GPIO registers into the virtual memory space.\n");
 		return -1;
 	}
-	int gpio_pins[6] = {10, 11, 12, 13, 14, 15};
-	enable_gpio_pins(gpio_pins);
+
+	int gpio_pins[] = {RS, EN, D4, D5, D6, D7};
+	int length = sizeof(gpio_pins)/sizeof(int);
+	enable_gpio_pins(gpio_pins, length);
+
 	lcd_init();
-	lcd_send_data('A');
+	usleep(5000);
 
-	// Define pin 18 as output
-//	INP_GPIO(18);
-//	OUT_GPIO(18);
-
-//	for (int i=0; i < 10; i++)
-//	{
-//	// Toggle pin 18 (blink a led!)
-//		printf("On\n");
-//		GPIO_SET = 1 << 18;
-//		sleep(1);
-//		printf("Off\n");
-//		GPIO_CLR = 1 << 18;
-//		sleep(1);
-//	}
+	lcd_send_data('R');
+	usleep(5000);
+	lcd_send_data('2');
+	usleep(5000);
+	lcd_send_data('D');
+	usleep(5000);
+	lcd_send_data('3');
+	usleep(5000);
+	lcd_send_data('s');
+	usleep(5000);
+	lcd_send_data('h');
+	usleep(5000);
+	lcd_send_data('-');
+	usleep(5000);
+	lcd_send_data('*');
+	usleep(5000);
 }

@@ -1,14 +1,23 @@
 #ifndef LCD_h
 #define LCD_H
 
-
-
 #include "rpi.h"
 
-#define CLEAR_DISPLAY		0x01
+#define ZERO_ALL_PINS		0x00
+
 #define SET_4BIT_MODE		0x20
 #define SET_8BIT_MODE		0x30
 #define LINE_NUMBER_2		0x08
+#define FONT_SIZE			0x00
+
+#define DISPLAY_ON			0x0C
+#define CURSOR_ON			0x02
+#define CURSOR_BLINK_ON		0x01
+
+#define CLEAR_DISPLAY		0x01
+
+#define INCREMENT_CURSOR	0x06
+
 #define COMMAND_REG			0x00
 #define DATA_REG			0x01
 #define ENABLE				0x01
@@ -33,11 +42,8 @@
 										})
 
 
-
-extern void lcd_init();
-void lcd_set_4bit_mode();
-void lcd_clear_display();
-void lcd_set_cursor(unsigned int, unsigned int);
+void lcd_init();
+void lcd_toggle_e_pin();
 void lcd_send_command(char);
 void lcd_send_data(char);
 
