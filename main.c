@@ -10,27 +10,45 @@ int main(int argc, char **argv)
 		return -1;
 	}
 
-	int gpio_pins[] = {RS, EN, D4, D5, D6, D7};
-	int length = sizeof(gpio_pins)/sizeof(int);
 	enable_gpio_pins(gpio_pins, length);
 
 	lcd_init();
-	usleep(5000);
+	lcd_set_cursor_position(1, 5);
+	lcd_send_data('H');
+	sleep(1);
 
-	lcd_send_data('R');
-	usleep(5000);
-	lcd_send_data('2');
-	usleep(5000);
-	lcd_send_data('D');
-	usleep(5000);
-	lcd_send_data('3');
-	usleep(5000);
-	lcd_send_data('s');
-	usleep(5000);
-	lcd_send_data('h');
-	usleep(5000);
-	lcd_send_data('-');
-	usleep(5000);
-	lcd_send_data('*');
-	usleep(5000);
+	lcd_send_command(CLEAR_DISPLAY);
+
+	lcd_set_cursor_position(1, 10);
+	lcd_send_data('A');
+	sleep(1);
+
+	lcd_send_command(CLEAR_DISPLAY);
+
+	lcd_set_cursor_position(2, 10);
+	lcd_send_data('B');
+	sleep(1);
+
+	lcd_send_command(CLEAR_DISPLAY);
+
+	lcd_set_cursor_position(2, 5);
+	lcd_send_data('T');
+	sleep(1);
+
+//	for (int i=0; i<10; i++)
+//	{
+//		lcd_send_command(SHIFT_SCREEN_ENABLE|SHIFT_SCREEN_LEFT);
+//		usleep(5000);
+//		sleep(1);
+//	}
+
+//	for (int j=0; j< 3; j++)
+//	{
+//		for (unsigned char i=0x30; i<0x3A; i++)
+//		{
+//			lcd_send_data(i);
+//			usleep(5000);
+//		}
+//	}
+
 }

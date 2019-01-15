@@ -39,5 +39,6 @@ void enable_gpio_pins(unsigned int *pins, unsigned int length)
 	{
 		INP_GPIO(pins[i]);
 		OUT_GPIO(pins[i]);
+		GPIO_CLR = 1 << pins[i];
 	}
 }

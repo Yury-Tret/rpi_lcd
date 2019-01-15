@@ -3,24 +3,43 @@
 
 #include "rpi.h"
 
-#define ZERO_ALL_PINS		0x00
-
-#define SET_4BIT_MODE		0x20
-#define SET_8BIT_MODE		0x30
+#define FUNCTION_SET		0x20
+#define SET_4BIT_MODE		0x00
 #define LINE_NUMBER_2		0x08
 #define FONT_SIZE			0x00
 
-#define DISPLAY_ON			0x0C
+#define DISPLAY				0x08
+#define DISPLAY_ON			0x04
 #define CURSOR_ON			0x02
 #define CURSOR_BLINK_ON		0x01
+#define CURSOR_OFF			0x00
+#define CURSOR_BLINK_OFF	0x00
 
 #define CLEAR_DISPLAY		0x01
 
-#define INCREMENT_CURSOR	0x06
 
-#define COMMAND_REG			0x00
-#define DATA_REG			0x01
-#define ENABLE				0x01
+
+#define RETURN_HOME			0x02
+
+
+#define ENTRY_MODE_SET		0x04
+#define INCREMENT_CURSOR	0x02
+
+#define SHIFT_SCREEN_ENABLE	0x10
+#define SHIFT_SCREEN_LEFT	0x08
+#define SHIFT_SCREEN_RIGHT	0x0C
+
+#define SET_DDRAM_ADDRESS	0x80
+#define FIRST_ROW			0x00
+#define SECOND_ROW			0x40
+
+#define SET_CGRAM_ADDRESS	0x40
+
+#define CONTROL				0x00
+#define DATA				0x01
+
+#define LOW					0x00
+#define HIGH				0x01
 
 //control pins
 #define RS					20
@@ -34,7 +53,7 @@
 #define SET_REGISTER(registr, value)	value ? (GPIO_SET = 1 << registr) : (GPIO_CLR = 1 << registr);
 
 //4 bits data
-#define DATA(value)						({							\
+#define SET_DATA(value)						({							\
 											SET_REGISTER(D4, value & 0x1);	\
 											SET_REGISTER(D5, (value & 0x2) >> 1);	\
 											SET_REGISTER(D6, (value & 0x4) >> 2);	\
@@ -42,9 +61,12 @@
 										})
 
 
+extern unsigned int gpio_pins[];
+extern unsigned int length;
 void lcd_init();
 void lcd_toggle_e_pin();
-void lcd_send_command(char);
-void lcd_send_data(char);
+void lcd_send_command(unsigned char);
+void lcd_send_data(unsigned char);
+void lcd_set_cursor_position(int row, int position);
 
 #endif
