@@ -66,6 +66,13 @@ void lcd_toggle_e_pin()
 	SET_REGISTER(EN, LOW);
 }
 
+void zero_all_pins()
+{
+	SET_REGISTER(RS, LOW);
+	SET_REGISTER(EN, LOW);
+	SET_DATA(LOW);
+}
+
 void lcd_send_command(unsigned char command)
 {
 	SET_REGISTER(RS, CONTROL);							//set rs bit to 0
@@ -73,11 +80,12 @@ void lcd_send_command(unsigned char command)
 
 	//send 2 peaces of command because 4 bits mode
 	SET_DATA((command & 0xF0) >> 4);					//send upper nibble
-	lcd_toggle_e_pin();									//allow lcd to grad data
+	lcd_toggle_e_pin();									//allow lcd to grab data
 	usleep(1);
 	SET_DATA(command & 0x0F);							//send lower nibble
-	lcd_toggle_e_pin();									//allow lcd to grad data
+	lcd_toggle_e_pin();									//allow lcd to grab data
 	usleep(5000);
+	zero_all_pins();
 }
 
 void lcd_send_data(unsigned char data)
@@ -87,9 +95,10 @@ void lcd_send_data(unsigned char data)
 
 	//send 2 peaces of data because 4 bits mode
 	SET_DATA((data & 0xF0) >> 4);						//send upper nibble
-	lcd_toggle_e_pin();									//allow lcd to grad data
+	lcd_toggle_e_pin();									//allow lcd to grab data
 	usleep(1);
 	SET_DATA(data & 0x0F);								//send lower nibble
-	lcd_toggle_e_pin();									//allow lcd to grad data
+	lcd_toggle_e_pin();									//allow lcd to grab data
 	usleep(5000);
+	zero_all_pins();
 }

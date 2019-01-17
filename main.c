@@ -77,9 +77,9 @@ int main(int argc, char **argv)
 	lcd_print_custom_char_line(line, sizeof(line));
 
 	lcd_set_cursor_position(1, 1);
-	lcd_print_line("CPU Load");
+	lcd_print_line("CPU");
 	lcd_set_cursor_position(2, 1);
-	lcd_print_line("77%");
+	lcd_print_line("5%");
 
 //	for (int i=0; i<10; i++)
 //	{

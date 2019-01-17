@@ -70,5 +70,6 @@ void lcd_set_cursor_position(int, int);
 void lcd_create_custom_char_map(unsigned char [][8], int);
 void lcd_print_line(char *);
 void lcd_print_custom_char_line(char[], int);
+void zero_all_pins();
 
 #endif
