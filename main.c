@@ -13,42 +13,79 @@ int main(int argc, char **argv)
 	enable_gpio_pins(gpio_pins, length);
 
 	lcd_init();
-	lcd_set_cursor_position(1, 5);
-	lcd_send_data('H');
-	sleep(1);
 
-	lcd_send_command(CLEAR_DISPLAY);
+	unsigned char custom_char_map[][SYMBOL_HEIGHT]={{
+		0b00000,
+		0b00000,
+		0b00000,
+		0b00000,
+		0b00000,
+		0b00000,
+		0b00001,
+		0b01111
+	},
+	{
+		0b00000,
+		0b00000,
+		0b00000,
+		0b00000,
+		0b00000,
+		0b00111,
+		0b11111,
+		0b11111
+	},
+	{
+		0b00000,
+		0b00000,
+		0b00000,
+		0b00001,
+		0b01111,
+		0b11111,
+		0b11111,
+		0b11111
+	},
+	{
+		0b00000,
+		0b00000,
+		0b00011,
+		0b11111,
+		0b11111,
+		0b11111,
+		0b11111,
+		0b11111
+	},
+	{
+		0b00001,
+		0b01111,
+		0b11111,
+		0b11111,
+		0b11111,
+		0b11111,
+		0b11111,
+		0b11111
+	}};
 
-	lcd_set_cursor_position(1, 10);
-	lcd_send_data('A');
-	sleep(1);
+	int map_size = sizeof(custom_char_map)/sizeof(*custom_char_map);
+	lcd_create_custom_char_map(custom_char_map, map_size);
 
-	lcd_send_command(CLEAR_DISPLAY);
+	lcd_set_cursor_position(2, 7);
+	char line1[] = {0x00, 0x01, 0x02, 0x03, 0x04, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF};
+	lcd_print_custom_char_line(line1, sizeof(line1));
 
-	lcd_set_cursor_position(2, 10);
-	lcd_send_data('B');
-	sleep(1);
+	lcd_set_cursor_position(1, 12);
+	char line[] = {0x00, 0x01, 0x02, 0x03, 0x04};
+	lcd_print_custom_char_line(line, sizeof(line));
 
-	lcd_send_command(CLEAR_DISPLAY);
-
-	lcd_set_cursor_position(2, 5);
-	lcd_send_data('T');
-	sleep(1);
+	lcd_set_cursor_position(1, 1);
+	lcd_print_line("CPU Load");
+	lcd_set_cursor_position(2, 1);
+	lcd_print_line("77%");
 
 //	for (int i=0; i<10; i++)
 //	{
 //		lcd_send_command(SHIFT_SCREEN_ENABLE|SHIFT_SCREEN_LEFT);
 //		usleep(5000);
 //		sleep(1);
-//	}
-
-//	for (int j=0; j< 3; j++)
-//	{
-//		for (unsigned char i=0x30; i<0x3A; i++)
-//		{
-//			lcd_send_data(i);
-//			usleep(5000);
-//		}
 //	}
 
 }

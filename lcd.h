@@ -17,10 +17,7 @@
 
 #define CLEAR_DISPLAY		0x01
 
-
-
 #define RETURN_HOME			0x02
-
 
 #define ENTRY_MODE_SET		0x04
 #define INCREMENT_CURSOR	0x02
@@ -40,6 +37,8 @@
 
 #define LOW					0x00
 #define HIGH				0x01
+
+#define SYMBOL_HEIGHT		8
 
 //control pins
 #define RS					20
@@ -67,6 +66,9 @@ void lcd_init();
 void lcd_toggle_e_pin();
 void lcd_send_command(unsigned char);
 void lcd_send_data(unsigned char);
-void lcd_set_cursor_position(int row, int position);
+void lcd_set_cursor_position(int, int);
+void lcd_create_custom_char_map(unsigned char [][8], int);
+void lcd_print_line(char *);
+void lcd_print_custom_char_line(char[], int);
 
 #endif
