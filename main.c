@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include "rpi.h"
 #include "lcd.h"
+#include <string.h>
 
 int main(int argc, char **argv)
 {
@@ -80,6 +81,27 @@ int main(int argc, char **argv)
 	lcd_print_line("CPU");
 	lcd_set_cursor_position(2, 1);
 	lcd_print_line("5%");
+
+	while(1)
+	{
+		char str[50];
+		int row;
+		printf("Enter string and row: ");
+		scanf("%s %d", str, &row);
+		if (strcmp("exit", str)==0)
+		{
+			break;
+		}
+		if (strlen(str)>0 && (row==1 || row==2))
+		{
+			lcd_set_cursor_position(row, 1);
+			lcd_print_line(str);
+		}
+		else
+		{
+			printf("Incorrect data\n");
+		}
+	}
 
 //	for (int i=0; i<10; i++)
 //	{
