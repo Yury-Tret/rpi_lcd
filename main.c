@@ -69,44 +69,51 @@ int main(int argc, char **argv)
 	int map_size = sizeof(custom_char_map)/sizeof(*custom_char_map);
 	lcd_create_custom_char_map(custom_char_map, map_size);
 
-	lcd_set_cursor_position(2, 7);
-	char line1[] = {0x00, 0x01, 0x02, 0x03, 0x04, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF};
-	lcd_print_custom_char_line(line1, sizeof(line1));
+//	lcd_set_cursor_position(2, 7);
+//	char line1[] = {SYMBOL_1, SYMBOL_2, SYMBOL_3, SYMBOL_4, SYMBOL_5, \
+//					SYMBOL_FULL, SYMBOL_FULL, SYMBOL_FULL, SYMBOL_FULL, SYMBOL_FULL};
+//	lcd_print_custom_char_line(line1, sizeof(line1));
+//
+//	lcd_set_cursor_position(1, 12);
+//	char line[] = {SYMBOL_1, SYMBOL_2, SYMBOL_3, SYMBOL_4, SYMBOL_5};
+//	lcd_print_custom_char_line(line, sizeof(line));
 
-	lcd_set_cursor_position(1, 12);
-	char line[] = {0x00, 0x01, 0x02, 0x03, 0x04};
-	lcd_print_custom_char_line(line, sizeof(line));
+//	for (int i=1; i<=10; i++)
+//	{
+//		lcd_print_graph(i*10);
+//		sleep(1);
+//	}
+	lcd_print_graph(20);
 
 	lcd_set_cursor_position(1, 1);
 	lcd_print_line("CPU");
 	lcd_set_cursor_position(2, 1);
-	lcd_print_line("5%");
+	lcd_print_line("50");
 
-	while(1)
-	{
-		char str[50];
-		int row;
-		printf("Enter string and row: ");
-		scanf("%s %d", str, &row);
-		if (strcmp("exit", str)==0)
-		{
-			break;
-		}
-		if (strlen(str)>0 && (row==1 || row==2))
-		{
-			lcd_set_cursor_position(row, 1);
-			lcd_print_line(str);
-		}
-		else
-		{
-			printf("Incorrect data\n");
-		}
-	}
-
-//	for (int i=0; i<10; i++)
+//	while(1)
+//	{
+//		char str[50];
+//		int row;
+//		printf("Enter string and row: ");
+//		scanf("%s %d", str, &row);
+//		if (strcmp("exit", str)==0)
+//		{
+//			break;
+//		}
+//		if (strlen(str)>0 && (row==1 || row==2))
+//		{
+//			lcd_set_cursor_position(row, 1);
+//			lcd_print_line(str);
+//		}
+//		else
+//		{
+//			printf("Incorrect data\n");
+//		}
+//	}
+//
+//	for (int i=0; i<6; i++)
 //	{
 //		lcd_send_command(SHIFT_SCREEN_ENABLE|SHIFT_SCREEN_LEFT);
-//		usleep(5000);
 //		sleep(1);
 //	}
 

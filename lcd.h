@@ -39,6 +39,12 @@
 #define HIGH				0x01
 
 #define SYMBOL_HEIGHT		8
+#define SYMBOL_1			0x00
+#define SYMBOL_2			0x01
+#define SYMBOL_3			0x02
+#define SYMBOL_4			0x03
+#define SYMBOL_5			0x04
+#define SYMBOL_FULL			0xFF
 
 //control pins
 #define RS					20
@@ -58,7 +64,17 @@
 											SET_REGISTER(D6, (value & 0x4) >> 2);	\
 											SET_REGISTER(D7, (value & 0x8) >> 3);	\
 										})
-
+#define GRAPH_ARRAY_SIZE	10
+#define GRAPH_10			SYMBOL_1
+#define GRAPH_20			SYMBOL_1, SYMBOL_2
+#define GRAPH_30			SYMBOL_1, SYMBOL_2, SYMBOL_3
+#define GRAPH_40			SYMBOL_1, SYMBOL_2, SYMBOL_3, SYMBOL_4
+#define GRAPH_50			SYMBOL_1, SYMBOL_2, SYMBOL_3, SYMBOL_4, SYMBOL_5
+#define GRAPH_60			GRAPH_50, SYMBOL_FULL
+#define GRAPH_70			GRAPH_50, SYMBOL_FULL, SYMBOL_FULL
+#define GRAPH_80			GRAPH_50, SYMBOL_FULL, SYMBOL_FULL, SYMBOL_FULL
+#define GRAPH_90			GRAPH_50, SYMBOL_FULL, SYMBOL_FULL, SYMBOL_FULL, SYMBOL_FULL
+#define GRAPH_100			GRAPH_50, SYMBOL_FULL, SYMBOL_FULL, SYMBOL_FULL, SYMBOL_FULL, SYMBOL_FULL
 
 extern unsigned int gpio_pins[];
 extern unsigned int length;
@@ -67,9 +83,10 @@ void lcd_toggle_e_pin();
 void lcd_send_command(unsigned char);
 void lcd_send_data(unsigned char);
 void lcd_set_cursor_position(int, int);
-void lcd_create_custom_char_map(unsigned char [][8], int);
+void lcd_create_custom_char_map(unsigned char [][SYMBOL_HEIGHT], int);
 void lcd_print_line(char *);
-void lcd_print_custom_char_line(char[], int);
-void zero_all_pins();
+void lcd_print_custom_char_line(char *, int);
+void lcd_zero_all_pins();
+void lcd_print_graph(int);
 
 #endif
