@@ -78,12 +78,12 @@ int main(int argc, char **argv)
 //	char line[] = {SYMBOL_1, SYMBOL_2, SYMBOL_3, SYMBOL_4, SYMBOL_5};
 //	lcd_print_custom_char_line(line, sizeof(line));
 
-//	for (int i=1; i<=10; i++)
-//	{
-//		lcd_print_graph(i*10);
-//		sleep(1);
-//	}
-	lcd_print_graph(20);
+	for (int i=1; i<=10; i++)
+	{
+		lcd_print_graph(i*10);
+		sleep(1);
+	}
+//	lcd_print_graph(50);
 
 	lcd_set_cursor_position(1, 1);
 	lcd_print_line("CPU");

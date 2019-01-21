@@ -14,77 +14,62 @@ void lcd_init()
 	lcd_send_command(ENTRY_MODE_SET|INCREMENT_CURSOR);
 }
 
-//char * lcd_fill_custom_char_array()
-//{
-//	myarray = (int*)malloc(sizeof(MYDATA));
-//	memcpy(myarray, MYDATA, sizeof(MYDATA));
-//}
-
 void lcd_print_graph(int value)
 {
 	char *line_1 = (char *)calloc(GRAPH_ARRAY_SIZE, sizeof(char));
 	char *line_2 = (char *)calloc(GRAPH_ARRAY_SIZE, sizeof(char));
-//	char line_1[GRAPH_ARRAY_SIZE];//={[0 ... (GRAPH_ARRAY_SIZE - 1)] = '-'};
-//	char line_2[GRAPH_ARRAY_SIZE];//={[0 ... (GRAPH_ARRAY_SIZE - 1)] = '-'};
 	switch (value)
 	{
 		case 10:
-//			line_2[GRAPH_ARRAY_SIZE] = {GRAPH_10};
 			memcpy(line_2, (char [GRAPH_ARRAY_SIZE]){GRAPH_10}, GRAPH_ARRAY_SIZE);
 			break;
 		case 20:
-//			line_2[GRAPH_ARRAY_SIZE] = GRAPH_20;
 			memcpy(line_2, (char [GRAPH_ARRAY_SIZE]){GRAPH_20}, GRAPH_ARRAY_SIZE);
 			break;
-//		case 30:
-//			line_2[GRAPH_ARRAY_SIZE] = GRAPH_30;
-//			break;
-//		case 40:
-//			line_2[GRAPH_ARRAY_SIZE] = GRAPH_40;
-//			break;
-//		case 50:
-//			line_2[GRAPH_ARRAY_SIZE] = GRAPH_50;
-//			break;
-//		case 60:
-//			line_1[GRAPH_ARRAY_SIZE] = GRAPH_10;
-//			line_2[GRAPH_ARRAY_SIZE] = GRAPH_60;
-//			break;
-//		case 70:
-//			line_1[GRAPH_ARRAY_SIZE] = GRAPH_20;
-//			line_2[GRAPH_ARRAY_SIZE] = GRAPH_70;
-//			break;
-//		case 80:
-//			line_1[GRAPH_ARRAY_SIZE] = GRAPH_30;
-//			line_2[GRAPH_ARRAY_SIZE] = GRAPH_80;
-//			break;
-//		case 90:
-//			line_1[GRAPH_ARRAY_SIZE] = GRAPH_40;
-//			line_2[GRAPH_ARRAY_SIZE] = GRAPH_90;
-//			break;
-//		case 100:
-//			line_1[GRAPH_ARRAY_SIZE] = GRAPH_50;
-//			line_2[GRAPH_ARRAY_SIZE] = GRAPH_100;
-//			break;
+		case 30:
+			memcpy(line_2, (char [GRAPH_ARRAY_SIZE]){GRAPH_30}, GRAPH_ARRAY_SIZE);
+			break;
+		case 40:
+			memcpy(line_2, (char [GRAPH_ARRAY_SIZE]){GRAPH_40}, GRAPH_ARRAY_SIZE);
+			break;
+		case 50:
+			memcpy(line_2, (char [GRAPH_ARRAY_SIZE]){GRAPH_50}, GRAPH_ARRAY_SIZE);
+			break;
+		case 60:
+			memcpy(line_1, (char [GRAPH_ARRAY_SIZE]){GRAPH_10}, GRAPH_ARRAY_SIZE);
+			memcpy(line_2, (char [GRAPH_ARRAY_SIZE]){GRAPH_60}, GRAPH_ARRAY_SIZE);
+			break;
+		case 70:
+			memcpy(line_1, (char [GRAPH_ARRAY_SIZE]){GRAPH_20}, GRAPH_ARRAY_SIZE);
+			memcpy(line_2, (char [GRAPH_ARRAY_SIZE]){GRAPH_70}, GRAPH_ARRAY_SIZE);
+			break;
+		case 80:
+			memcpy(line_1, (char [GRAPH_ARRAY_SIZE]){GRAPH_30}, GRAPH_ARRAY_SIZE);
+			memcpy(line_2, (char [GRAPH_ARRAY_SIZE]){GRAPH_80}, GRAPH_ARRAY_SIZE);
+			break;
+		case 90:
+			memcpy(line_1, (char [GRAPH_ARRAY_SIZE]){GRAPH_40}, GRAPH_ARRAY_SIZE);
+			memcpy(line_2, (char [GRAPH_ARRAY_SIZE]){GRAPH_90}, GRAPH_ARRAY_SIZE);
+			break;
+		case 100:
+			memcpy(line_1, (char [GRAPH_ARRAY_SIZE]){GRAPH_50}, GRAPH_ARRAY_SIZE);
+			memcpy(line_2, (char [GRAPH_ARRAY_SIZE]){GRAPH_100}, GRAPH_ARRAY_SIZE);
+			break;
 		default:
 			printf("Incorrect graph value\n");
 	}
 
-	printf("value - %d\n", value);
-//	for (int i=0; i<GRAPH_ARRAY_SIZE; i++)
-//	{
-//		printf("i=%d, line_2=%x\n", i, line_2[i]);
-//	}
-//	for (int i=0; i<GRAPH_ARRAY_SIZE; i++)
-//	{
-//		printf("i=%d, line_1=%x\n", i, line_1[i]);
-//	}
-	printf("sizeof %d\n", sizeof(line_2));
-	printf("strlen %d\n", strlen(line_2));
-//	lcd_set_cursor_position(1, 12);
-//	lcd_print_custom_char_line(line_1, GRAPH_ARRAY_SIZE);
+	if (value > 50)
+	{
+		lcd_set_cursor_position(1, 12);
+		lcd_print_custom_char_line(line_1);
+	}
 
 	lcd_set_cursor_position(2, 7);
-	lcd_print_custom_char_line(line_2, GRAPH_ARRAY_SIZE);
+	lcd_print_custom_char_line(line_2);
+
+	free(line_1);
+	free(line_2);
 }
 
 void lcd_print_line(char *line)
@@ -95,16 +80,15 @@ void lcd_print_line(char *line)
 	}
 }
 
-void lcd_print_custom_char_line(char *line, int length)
+void lcd_print_custom_char_line(char *line)
 {
-	for (int i=0; i<length; i++)
+	for (int i=0; i<GRAPH_ARRAY_SIZE; i++)
 	{
-//		if (line[i] != '-')				////////////////////////////////////////////////////////////
-//		{
-		lcd_send_data(line[i]);
-//		}
+		if (i==0 || (i > 0 && line[i] != 0))
+		{
+			lcd_send_data(line[i]);
+		}
 	}
-	free(line);
 }
 
 void lcd_create_custom_char_map(unsigned char custom_char_map[][SYMBOL_HEIGHT], int map_size)

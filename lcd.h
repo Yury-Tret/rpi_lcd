@@ -85,7 +85,7 @@ void lcd_send_data(unsigned char);
 void lcd_set_cursor_position(int, int);
 void lcd_create_custom_char_map(unsigned char [][SYMBOL_HEIGHT], int);
 void lcd_print_line(char *);
-void lcd_print_custom_char_line(char *, int);
+void lcd_print_custom_char_line(char *);
 void lcd_zero_all_pins();
 void lcd_print_graph(int);
 
