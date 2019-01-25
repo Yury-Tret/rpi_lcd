@@ -69,27 +69,23 @@ int main(int argc, char **argv)
 	int map_size = sizeof(custom_char_map)/sizeof(*custom_char_map);
 	lcd_create_custom_char_map(custom_char_map, map_size);
 
-//	lcd_set_cursor_position(2, 7);
-//	char line1[] = {SYMBOL_1, SYMBOL_2, SYMBOL_3, SYMBOL_4, SYMBOL_5, \
-//					SYMBOL_FULL, SYMBOL_FULL, SYMBOL_FULL, SYMBOL_FULL, SYMBOL_FULL};
-//	lcd_print_custom_char_line(line1, sizeof(line1));
-//
-//	lcd_set_cursor_position(1, 12);
-//	char line[] = {SYMBOL_1, SYMBOL_2, SYMBOL_3, SYMBOL_4, SYMBOL_5};
-//	lcd_print_custom_char_line(line, sizeof(line));
+	int value = 0;
+	char char_value[5];
 
-	for (int i=1; i<=10; i++)
+	while(1)
 	{
-		lcd_print_graph(i*10);
-		sleep(1);
+		value = get_cpu_usage(1);
+		sprintf(char_value, "%d", value);
+
+		lcd_send_command(CLEAR_DISPLAY);
+
+		lcd_print_graph(value);
+
+		lcd_set_cursor_position(1, 1);
+		lcd_print_line("CPU");
+		lcd_set_cursor_position(2, 1);
+		lcd_print_line(char_value);
 	}
-//	lcd_print_graph(50);
-
-	lcd_set_cursor_position(1, 1);
-	lcd_print_line("CPU");
-	lcd_set_cursor_position(2, 1);
-	lcd_print_line("50");
-
 //	while(1)
 //	{
 //		char str[50];

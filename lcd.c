@@ -16,10 +16,13 @@ void lcd_init()
 
 void lcd_print_graph(int value)
 {
+	value -= value%10;
 	char *line_1 = (char *)calloc(GRAPH_ARRAY_SIZE, sizeof(char));
 	char *line_2 = (char *)calloc(GRAPH_ARRAY_SIZE, sizeof(char));
 	switch (value)
 	{
+		case 0:
+			break;
 		case 10:
 			memcpy(line_2, (char [GRAPH_ARRAY_SIZE]){GRAPH_10}, GRAPH_ARRAY_SIZE);
 			break;
@@ -59,14 +62,17 @@ void lcd_print_graph(int value)
 			printf("Incorrect graph value\n");
 	}
 
-	if (value > 50)
+	if (value != 0)
 	{
-		lcd_set_cursor_position(1, 12);
-		lcd_print_custom_char_line(line_1);
-	}
+		if (value > 50)
+		{
+			lcd_set_cursor_position(1, 12);
+			lcd_print_custom_char_line(line_1);
+		}
 
-	lcd_set_cursor_position(2, 7);
-	lcd_print_custom_char_line(line_2);
+		lcd_set_cursor_position(2, 7);
+		lcd_print_custom_char_line(line_2);
+	}
 
 	free(line_1);
 	free(line_2);

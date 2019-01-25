@@ -27,9 +27,27 @@ struct bcm2835_peripheral {
     volatile unsigned int *addr;
 };
 
+typedef struct line_info {
+	int line_length;
+	int words_count;
+	int *chars_per_word_count;
+} LINE_INFO;
+
+typedef struct cpu_stats  {
+	int *cpu_stats;
+	int length;
+} CPU_STATS;
+
 extern struct bcm2835_peripheral gpio;
 int map_peripheral(struct bcm2835_peripheral *);
 void unmap_peripheral(struct bcm2835_peripheral *);
 void enable_gpio_pins(unsigned int *, unsigned int);
+int get_cpu_usage(int);
+CPU_STATS *get_cpu_stats();
+char **get_cpu_times(char *, LINE_INFO *);
+int *cpu_times_to_int(char **, LINE_INFO *);
+LINE_INFO *count_line_length(FILE *);
+int summ_members_of_array(int *, int);
+
 
 #endif
