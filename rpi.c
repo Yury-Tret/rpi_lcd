@@ -190,8 +190,13 @@ CPU_STATS *get_cpu_stats()
 	cpu_stats->cpu_stats = cpu_times_array_int;
 	cpu_stats->length = lip->words_count;
 
-	//TODO free cpu_times_array and all *(cpu_times_array)
-	//TODO free lip and lip->words_count
+	for (int i=0; i<lip->words_count; i++)
+	{
+		free(cpu_times_array[i]);
+	}
+	free(cpu_times_array);
+	free(lip->chars_per_word_count);
+	free(lip);
 
 	return cpu_stats;
 }
@@ -219,8 +224,10 @@ int get_cpu_usage(int period)
 	float idle_fraction = delta_idle/delta_total;
 	int cpu_usage = (int)((1 - idle_fraction)*100);
 
-	//TODO free cpu_times_array_int
-	//TODO free first_cpu_stats
+	free(first_cpu_stats->cpu_stats);
+	free(second_cpu_stats->cpu_stats);
+	free(first_cpu_stats);
+	free(second_cpu_stats);
 
 	return cpu_usage;
 }
